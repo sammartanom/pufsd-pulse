@@ -4,7 +4,7 @@
   "main": "src/worker.ts",
   "compatibility_date": "2026-10-20",
   "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" },
-  "d1_databases": [{ "binding": "PULSE_DB", "database_name": "pufsd-pulse", "database_id": "REPLACE_WITH_D1_DATABASE_ID", "migrations_dir": "migrations" }],
+  "d1_databases": [{ "binding": "PULSE_DB", "database_name": "pufsd-pulse", "database_id": "741d5902-84b7-481f-8265-cc6c4b166e69", "migrations_dir": "migrations" }],
   "durable_objects": { "bindings": [{ "name": "SESSION_ROOM", "class_name": "SessionRoom" }] },
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["SessionRoom"] }],
   "vars": { "APP_ORIGIN": "https://pulse.pufsd.org", "RETENTION_DAYS": "30" }
