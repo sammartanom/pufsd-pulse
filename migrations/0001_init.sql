@@ -1,0 +1,7 @@
+PRAGMA foreign_keys=ON;
+CREATE TABLE IF NOT EXISTS polls (id TEXT PRIMARY KEY, owner_email TEXT NOT NULL, title TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS questions (id TEXT PRIMARY KEY, poll_id TEXT NOT NULL REFERENCES polls(id) ON DELETE CASCADE, position INTEGER NOT NULL, type TEXT NOT NULL CHECK(type IN ('choice','ranking','likert','open')), prompt TEXT NOT NULL, options_json TEXT NOT NULL DEFAULT '[]', settings_json TEXT NOT NULL DEFAULT '{}');
+CREATE TABLE IF NOT EXISTS sessions (id TEXT PRIMARY KEY, poll_id TEXT NOT NULL REFERENCES polls(id), join_code TEXT NOT NULL UNIQUE, status TEXT NOT NULL CHECK(status IN ('waiting','open','closed','ended')), current_question_id TEXT, owner_email TEXT NOT NULL, created_at TEXT NOT NULL, expires_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS responses (id TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES sessions(id) ON DELETE CASCADE, question_id TEXT NOT NULL REFERENCES questions(id), participant_hash TEXT NOT NULL, answer_json TEXT NOT NULL, moderation_status TEXT NOT NULL DEFAULT 'approved', created_at TEXT NOT NULL, UNIQUE(session_id,question_id,participant_hash));
+CREATE INDEX IF NOT EXISTS idx_responses_question ON responses(session_id,question_id);
+CREATE TABLE IF NOT EXISTS audit_events (id TEXT PRIMARY KEY, actor_email TEXT NOT NULL, action TEXT NOT NULL, entity_id TEXT NOT NULL, created_at TEXT NOT NULL, detail_json TEXT NOT NULL DEFAULT '{}');
