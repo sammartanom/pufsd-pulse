@@ -1,4 +1,4 @@
-export interface Env { PULSE_DB:D1Database; SESSION_ROOM:DurableObjectNamespace; ASSETS:Fetcher; APP_ORIGIN:string; RETENTION_DAYS:string; }
+import { DurableObject } from "cloudflare:workers";export interface Env { PULSE_DB:D1Database; SESSION_ROOM:DurableObjectNamespace; ASSETS:Fetcher; APP_ORIGIN:string; RETENTION_DAYS:string; }
 const json=(data:unknown,status=200,headers:Record<string,string>={})=>new Response(JSON.stringify(data),{status,headers:{"content-type":"application/json; charset=utf-8","cache-control":"no-store",...headers}});
 const security={"x-content-type-options":"nosniff","x-frame-options":"DENY","referrer-policy":"no-referrer","permissions-policy":"camera=(), microphone=(), geolocation=()","content-security-policy":"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' wss: https:; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"};
 function email(req:Request){return req.headers.get('Cf-Access-Authenticated-User-Email')||req.headers.get('x-dev-user')||''}
